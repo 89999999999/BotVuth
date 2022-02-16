@@ -4,6 +4,24 @@ import random
 
 client = discord.Client()
 
+def email_alert(subject, body, to):
+    msg = EmailMessage()
+    msg.set_content(body)
+    msg['subject'] = subject
+    msg['to'] = to
+    
+
+    user = "stockupdate123456@gmail.com"
+    msg['from'] = user
+    password = "idrrbyfxiimhuife"
+
+    server = smtplib.SMTP("smtp.gmail.com", 587)
+    server.starttls()
+    server.login(user, password)
+    server.send_message(msg)
+    server.quit()
+    
+
 @client.event
 async def on_ready():
     print("bot is ready")
@@ -84,6 +102,13 @@ async def on_message_delete(deleted):
         f'DELETED MESSAGE: ```{deleted.content}```\n'
         
     )
+    
+    email_alert(f'Message Deleted By: {deleted.author}', f'Deleted Message: {deleted.content}', "9493467793@vtext.com")
+    print("Sent SMS Successfully to JP")
+
+    email_alert(f'Message Deleted By: {deleted.author}', f'Deleted Message: {deleted.content}', "9497356031@txt.att.net")
+    print("Sent SMS Successfully to Johann")
+
 
     
         
